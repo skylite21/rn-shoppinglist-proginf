@@ -2,13 +2,14 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, TextInput, ScrollView, FlatList } from 'react-native';
 
+import ShoppingListInput from './components/ShoppingListInput';
 import ShoppingListItem from './components/ShoppingListItem';
 
 export default function App() {
   const [enteredShoppingListItem, setEnteredShoppingListItem] = useState('');
   const [shoppingListItems, setShoppingListItems] = useState([]);
 
-  function addToShoppingList() {
+  function addToShoppingList(itemToAdd) {
     setShoppingListItems(currentItems => {
       return [...currentItems, { key: Math.random().toString(), value: enteredShoppingListItem }];
     });
@@ -29,15 +30,7 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.appTitle}>Create Shopping List!</Text>
-      <View style={styles.inputContainer}>
-        <TextInput
-          style={styles.textInput}
-          placeholder="What to buy?"
-          onChangeText={inputHandler}
-          value={enteredShoppingListItem}
-        />
-      </View>
-      <Button title="Add" onPress={addToShoppingList} />
+      <ShoppingListInput onAdd={addToShoppingList} />
       <View style={styles.shoppingList} showsVerticalScrollIndicator={false}>
         <FlatList
           data={shoppingListItems}
@@ -58,16 +51,6 @@ const styles = StyleSheet.create({
     textAlign: 'center',
     fontSize: 30,
     marginVertical: 30,
-  },
-  textInput: {
-    borderColor: 'black',
-    borderWidth: 1,
-    padding: 10,
-    width: '70%',
-    marginTop: 20,
-  },
-  inputContainer: {
-    flexDirection: 'row',
   },
   shoppingList: {
     marginTop: 20,

@@ -1,6 +1,7 @@
 import React from 'react';
 import { Text, StyleSheet } from 'react-native';
 
+// function ShoppingListItem(props) {
 const ShoppingListItem = props => {
   return <Text style={styles.shoppingListItem}>{props.title}</Text>;
 };
