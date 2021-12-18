@@ -2,6 +2,7 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, TextInput, ScrollView, FlatList } from 'react-native';
 
+import ListCounter from './components/ListCounter';
 import ShoppingListInput from './components/ShoppingListInput';
 import ShoppingListItem from './components/ShoppingListItem';
 
@@ -31,9 +32,11 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.appTitle}>Create Shopping List!</Text>
+      <ListCounter count={shoppingListItems.length} />
       <Button
         title={'Add new item'}
         onPress={() => {
+          // window.alert('ez egy popup');
           setIsAddPopupVisible(true);
         }}
       />
