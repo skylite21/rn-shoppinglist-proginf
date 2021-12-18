@@ -1,6 +1,6 @@
 import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
-import { StyleSheet, Text, View, Button, TextInput } from 'react-native';
+import { StyleSheet, Text, View, Button, TextInput, ScrollView, FlatList } from 'react-native';
 
 export default function App() {
   const [enteredShoppingListItem, setEnteredShoppingListItem] = useState('');
@@ -36,10 +36,11 @@ export default function App() {
         />
       </View>
       <Button title="Add" onPress={addToShoppingList} />
-      <View style={styles.shoppingList}>
-        {shoppingListItems.map(function (item) {
-          return <Text style={styles.shoppingListItem}>{item.value}</Text>;
-        })}
+      <View style={styles.shoppingList} showsVerticalScrollIndicator={false}>
+        <FlatList
+          data={shoppingListItems}
+          renderItem={data => <Text style={styles.shoppingListItem}>{data.item.value}</Text>}
+        />
       </View>
     </View>
   );
