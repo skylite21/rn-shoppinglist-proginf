@@ -1,9 +1,13 @@
 import React from 'react';
-import { Text, StyleSheet } from 'react-native';
+import { Text, StyleSheet, TouchableOpacity } from 'react-native';
 
 // function ShoppingListItem(props) {
 const ShoppingListItem = props => {
-  return <Text style={styles.shoppingListItem}>{props.title}</Text>;
+  return (
+    <TouchableOpacity onPress={() => props.onDelete(props.id)}>
+      <Text style={styles.shoppingListItem}>{props.title}</Text>
+    </TouchableOpacity>
+  );
 };
 
 const styles = StyleSheet.create({

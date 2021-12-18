@@ -6,19 +6,19 @@ import ShoppingListInput from './components/ShoppingListInput';
 import ShoppingListItem from './components/ShoppingListItem';
 
 export default function App() {
-  const [enteredShoppingListItem, setEnteredShoppingListItem] = useState('');
   const [shoppingListItems, setShoppingListItems] = useState([]);
 
   function addToShoppingList(itemToAdd) {
     setShoppingListItems(currentItems => {
-      return [...currentItems, { key: Math.random().toString(), value: enteredShoppingListItem }];
+      return [...currentItems, { key: Math.random().toString(), value: itemToAdd }];
     });
-    setEnteredShoppingListItem('');
   }
 
-  function inputHandler(enteredText) {
-    setEnteredShoppingListItem(enteredText);
-  }
+  const deleteFromShoppingList = key => {
+    setShoppingListItems(currentItems => {
+      return currentItems.filter(item => item.key !== key);
+    });
+  };
 
   // use effect will always trigger when state changes
   useEffect(() => {
@@ -34,7 +34,13 @@ export default function App() {
       <View style={styles.shoppingList} showsVerticalScrollIndicator={false}>
         <FlatList
           data={shoppingListItems}
-          renderItem={data => <ShoppingListItem title={data.item.value} />}
+          renderItem={data => (
+            <ShoppingListItem
+              title={data.item.value}
+              id={data.item.key}
+              onDelete={deleteFromShoppingList}
+            />
+          )}
         />
       </View>
     </View>
