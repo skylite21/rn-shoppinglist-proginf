@@ -7,6 +7,7 @@ import ShoppingListItem from './components/ShoppingListItem';
 
 export default function App() {
   const [shoppingListItems, setShoppingListItems] = useState([]);
+  const [isAddPopupVisible, setIsAddPopupVisible] = useState(false);
 
   function addToShoppingList(itemToAdd) {
     setShoppingListItems(currentItems => {
@@ -30,7 +31,19 @@ export default function App() {
   return (
     <View style={styles.container}>
       <Text style={styles.appTitle}>Create Shopping List!</Text>
-      <ShoppingListInput onAdd={addToShoppingList} />
+      <Button
+        title={'Add new item'}
+        onPress={() => {
+          setIsAddPopupVisible(true);
+        }}
+      />
+      <ShoppingListInput
+        onAdd={addToShoppingList}
+        visible={isAddPopupVisible}
+        onCancel={() => {
+          setIsAddPopupVisible(false);
+        }}
+      />
       <View style={styles.shoppingList} showsVerticalScrollIndicator={false}>
         <FlatList
           data={shoppingListItems}

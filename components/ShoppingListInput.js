@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import { Text, StyleSheet, TextInput, Button, View } from 'react-native';
+import { Text, StyleSheet, TextInput, Button, View, Modal, TouchableOpacity } from 'react-native';
 
 const ShoppingListInput = props => {
   const [enteredShoppingListItem, setEnteredShoppingListItem] = useState('');
@@ -9,21 +9,35 @@ const ShoppingListInput = props => {
   };
 
   return (
-    <View style={styles.inputContainer}>
-      <TextInput
-        style={styles.textInput}
-        placeholder="What to buy?"
-        onChangeText={inputHandler}
-        value={enteredShoppingListItem}
-      />
-      <Button
-        title={'Add'}
-        onPress={() => {
-          props.onAdd(enteredShoppingListItem);
-          setEnteredShoppingListItem('');
-        }}
-      />
-    </View>
+    <Modal visible={props.visible} animationType={'slide'}>
+      <View style={styles.inputContainer}>
+        <TextInput
+          style={styles.textInput}
+          placeholder="What to buy?"
+          onChangeText={inputHandler}
+          value={enteredShoppingListItem}
+        />
+        <View style={styles.buttonContainer}>
+          <TouchableOpacity
+            style={styles.buttonView}
+            onPress={() => {
+              setEnteredShoppingListItem('');
+              props.onCancel();
+            }}>
+            <Text style={styles.buttonText}>Cancel</Text>
+          </TouchableOpacity>
+          <TouchableOpacity
+            style={styles.buttonView}
+            onPress={() => {
+              props.onAdd(enteredShoppingListItem);
+              setEnteredShoppingListItem('');
+              props.onCancel();
+            }}>
+            <Text style={styles.buttonText}>Add</Text>
+          </TouchableOpacity>
+        </View>
+      </View>
+    </Modal>
   );
 };
 
@@ -35,8 +49,32 @@ const styles = StyleSheet.create({
     width: '70%',
     borderRadius: 20,
   },
-  inputContainer: {
+  buttonContainer: {
     flexDirection: 'row',
+    marginTop: 30,
+    width: '100%',
+    justifyContent: 'center',
+  },
+  inputContainer: {
+    flexDirection: 'column',
+    justifyContent: 'center',
+    alignItems: 'center',
+    flex: 1,
+  },
+  buttonView: {
+    elevation: 8,
+    backgroundColor: '#009688',
+    borderRadius: 10,
+    paddingVertical: 10,
+    paddingHorizontal: 12,
+    margin: 10,
+  },
+  buttonText: {
+    fontSize: 18,
+    color: '#fff',
+    fontWeight: 'bold',
+    alignSelf: 'center',
+    textTransform: 'uppercase',
   },
 });
 
