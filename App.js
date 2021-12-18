@@ -2,6 +2,8 @@ import { StatusBar } from 'expo-status-bar';
 import React, { useState, useEffect } from 'react';
 import { StyleSheet, Text, View, Button, TextInput, ScrollView, FlatList } from 'react-native';
 
+import ShoppingListItem from './components/ShoppingListItem';
+
 export default function App() {
   const [enteredShoppingListItem, setEnteredShoppingListItem] = useState('');
   const [shoppingListItems, setShoppingListItems] = useState([]);
@@ -39,7 +41,7 @@ export default function App() {
       <View style={styles.shoppingList} showsVerticalScrollIndicator={false}>
         <FlatList
           data={shoppingListItems}
-          renderItem={data => <Text style={styles.shoppingListItem}>{data.item.value}</Text>}
+          renderItem={data => <ShoppingListItem title={data.item.value} />}
         />
       </View>
     </View>
@@ -71,13 +73,5 @@ const styles = StyleSheet.create({
     marginTop: 20,
     alignSelf: 'flex-start',
     width: '100%',
-  },
-  shoppingListItem: {
-    backgroundColor: '#b2ddf7',
-    padding: 15,
-    marginBottom: 5,
-    borderRadius: 20,
-    // border radius miatt kell
-    overflow: 'hidden',
   },
 });
